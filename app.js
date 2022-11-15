@@ -108,18 +108,21 @@ fetch ('/clientes.json')
     .then( (data) => {
 
         data.forEach((cliente) => {
-            const li = document.createElement('li')
-            li.innerHTML = `
-                <h4>${cliente.cliente}</h4>
-                <p>${cliente.sucursal}</p>
-                <p>${cliente.razonSocial}</p>
-                <p>${cliente.fletero}</p>
-                <p>${cliente.reparto}</p>
-                <p>${cliente.domicilio}</p>
-                <p>${cliente.localidad}</p>
-                <hr/>
+            const tr = document.createElement('tr')
+            tr.innerHTML = `
+                <td>${cliente.cliente}</td>
+                <td>${cliente.sucursal}</td>
+                <td>${cliente.razonSocial}</td>
+                <td>${cliente.fletero}</td>
+                <td>${cliente.reparto}</td>
+                <td>${cliente.domicilio}</td>
+                <td>${cliente.localidad}</td>
+                
             `
    
-            listado.append(li)
+            listado.append(tr)
         })
     })
+
+    
+        
