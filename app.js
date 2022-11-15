@@ -5,6 +5,7 @@ let data=[];
 boton.addEventListener("click",agregar);
 guardar.addEventListener("click",save);
 let cant=0;
+
 function agregar(){
     let cliente =document.querySelector('#cliente').value;
     let sucursal = parseFloat(document.querySelector('#sucursal').value);
@@ -13,7 +14,7 @@ function agregar(){
     let reparto= parseFloat(document.querySelector('#reparto').value)
     let domicilio= document.querySelector('#domicilio').value
     let localidad= document.querySelector('#localidad').value
-    
+        
     //agrega elementos al arreglo
     data.push(
         {"cliente":cliente,"sucursal":sucursal,"reazonSocial":razonSocial,"fletero":fletero,"reparto":reparto,"domicilio":domicilio,"localidad":localidad}
@@ -22,7 +23,7 @@ function agregar(){
    //convertir el arreglo a json
   // console.log(JSON.stringify(data));
   var id_row='row'+cant;
-  var fila='<tr id='+id_row+'><td>'+cliente+'</td><td>'+sucursal+'</td><td>'+razonSocial+'</td><td>'+fletero+'</td><td>'+reparto+'</td><td>'+domicilio+'</td><td>'+localidad+'</td><td><a href="#" class="btn btn-danger" onclick="eliminar('+cant+')";>Eliminar</a><a href="#" class="btn btn-warning" onclick="('+cant+')";>Cantidad</a></td></tr>';
+  var fila='<tr id='+id_row+'><td>'+cliente+'</td><td>'+sucursal+'</td><td>'+razonSocial+'</td><td>'+fletero+'</td><td>'+reparto+'</td><td>'+domicilio+'</td><td>'+localidad+'</td><td><a href="#" class="btn btn-danger" onclick="eliminar('+cant+')";>Eliminar</a><a href="#" class="btn btn-danger" onclick="cantidad('+cant+')";>Cantidad</a></td></tr>';
   //agregar fila a la tabla
   $("#lista").append(fila);
   $("#cliente").val('');
@@ -33,8 +34,7 @@ function agregar(){
   $("#domicilio").val('');
   $("#localidad").val('');
   $("#cliente").focus();
-  cant++;
-  sumar();
+  
 }
 function eliminar(row){
     //remueve la fila de la tabla html
@@ -52,26 +52,39 @@ function eliminar(row){
        i++;
    }
    data.splice(pos,1);
-  sumar();
+  
 }
 function cantidad(row){
-    var canti=parseInt(prompt("Nueva cantidad"));
-    data[row].cantidad=canti;
-    data[row].total=data[row].cantidad*data[row].precio;
+    var cli=parseInt(prompt("Cliente"));
+    var suc=parseInt(prompt("Sucursal"));
+    var raz=parseInt(prompt("Razon Social"));
+    var flet=parseInt(prompt("Fletero"));
+    var rep=parseInt(prompt("Reparto"));
+    var domic=parseInt(prompt("Domicilio"));
+    var locali=parseInt(prompt("Localidad"));
+    
+    data[row].cliente=cli
+    data[row].sucursal=suc
+    data[row].razonSocial=raz
+    data[row].fletero=flet
+    data[row].reparto=rep
+    data[row].domicilio=domic
+    data[row].localidad=locali
+ 
     var filaid=document.getElementById("row"+row);
     celda=filaid.getElementsByTagName('td');
-    celda[2].innerHTML=canti;
-    celda[3].innerHTML= data[row].total;
-    console.log(data);
-    sumar();
+    celda[0].innerHTML=cli;
+    celda[1].innerHTML=suc;
+    celda[2].innerHTML=raz;
+    celda[3].innerHTML=flet;
+    celda[4].innerHTML=rep;
+    celda[5].innerHTML=domic;
+    celda[6].innerHTML=locali;
+
+    console.log(data);  
 }
-function sumar(){
-    let tot=0;
-    for (x of data){
-       tot=tot+x.total;
-    }
-    document.querySelector("#total").innerHTML="Total "+tot;
-}   
+
+  
 function save(){
     var json=JSON.stringify(data);
     $.ajax({
@@ -79,8 +92,34 @@ function save(){
         url: "api.php",
         data: "json="+json,
         success:function(respo){
-           location.reload();
+           console.log(resp)
+           // location.reload();
         }
         
     });
 }
+
+
+const listado = document.querySelector('#listado')
+
+fetch ('/clientes.json')
+
+    .then( (res) => res.json())
+    .then( (data) => {
+
+        data.forEach((cliente) => {
+            const li = document.createElement('li')
+            li.innerHTML = `
+                <h4>${cliente.cliente}</h4>
+                <p>${cliente.sucursal}</p>
+                <p>${cliente.razonSocial}</p>
+                <p>${cliente.fletero}</p>
+                <p>${cliente.reparto}</p>
+                <p>${cliente.domicilio}</p>
+                <p>${cliente.localidad}</p>
+                <hr/>
+            `
+   
+            listado.append(li)
+        })
+    })
