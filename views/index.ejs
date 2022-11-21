@@ -1,83 +1,140 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CLIENTES LOGISTICA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLIENTES LOGISTICA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-  <body>
-    
-    <nav class="navbar navbar-expand-lg bg-info">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
 
-      <div class="container">
-        <a href="/create" class="btn btn-dark primary mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
-        <p>CREAR CLIENTE</p>
-        <table class="table table-borderer table-striped text-center mt-4">
-        <thead>
-        <tr class="bg-primary text-white">
-            <th scope="col">ID</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Sucursal</th>
-            <th scope="col">Razon Social</th>
-            <th scope="col">Fletero</th>
-            <th scope="col">Reparto</th>
-            <th scope="col">Domicilio</th>
-            <th scope="col">Localidad</th>
-            <th scope="col">Partido</th>
-            <th scope="col">Acciones</th>
-            </tr> 
-        </thead>
-        <tbody>
-            <% results.forEach((clientes)=> { %>
-            <tr>
-             <td><%= clientes.id %></td>
-             <td><%= clientes.cliente %></td>
-             <td><%= clientes.sucursal %></td>
-             <td><%= clientes.razonsocial %></td>
-             <td><%= clientes.fletero %></td>
-             <td><%= clientes.reparto %></td>
-             <td><%= clientes.domicilio %></td>
-             <td><%= clientes.localidad %></td>
-             <td><%= clientes.partido %></td>
-             <td>
-                <a href="/edit/<%= clientes.id %>" class="btn btn-outline-info">editar</a>
-                <a href="/delete/<%= clientes.id %>" class="btn btn-outline-danger">borrar</a>
-             </td>  
-            </tr>
-        <% }) %>   
-        </tbody>  
-    </table>
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-info">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Clientes Logistica</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul> 
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+       -->
       </div>
-      
+    </div>
+  </nav>
+
+  <div class="container">
+    <a href="/create" class="btn btn-dark primary mt-4"><i class="fa-solid fa-square-plus"></i></a>
+    <p>CREAR CLIENTE</p>
+    <table id="users" class="table table-borderer table-striped text-center mt-4 table-responsive">
+      <thead>
+        <tr class="bg-primary text-white">
+          <th scope="col">ID</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Sucursal</th>
+          <th scope="col">Razon Social</th>
+          <th scope="col">Fletero</th>
+          <th scope="col">Reparto</th>
+          <th scope="col">Domicilio</th>
+          <th scope="col">Localidad</th>
+          <th scope="col">Partido</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach((clientes)=> { %>
+          <tr>
+            <td>
+              <%= clientes.id %>
+            </td>
+            <td>
+              <%= clientes.cliente %>
+            </td>
+            <td>
+              <%= clientes.sucursal %>
+            </td>
+            <td>
+              <%= clientes.razonsocial %>
+            </td>
+            <td>
+              <%= clientes.fletero %>
+            </td>
+            <td>
+              <%= clientes.reparto %>
+            </td>
+            <td>
+              <%= clientes.domicilio %>
+            </td>
+            <td>
+              <%= clientes.localidad %>
+            </td>
+            <td>
+              <%= clientes.partido %>
+            </td>
+            <td>
+              <a href="/edit/<%= clientes.id %>" class="btn btn-outline-info"><i
+                  class="fa-solid fa-pen-to-square"></i></a>
+              <!--<a href="/delete/<%= clientes.id %>" onclick="return confirm('¿Esta seguro de eliminar?')" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>-->
+              <a onclick="confirmar(<%= clientes.id %>)" class="btn btn-outline-danger"><i
+                  class="fa-solid fa-trash"></i></a>
+            </td>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
+  </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.10/dist/sweetalert2.all.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+    $('#users').DataTable();
+});
+
+    function confirmar(id) {
+      Swal.fire({
+      title: '¿Confirma eliminar el registro : '+id+'?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar' 
+      }).then((result) => {
+        if (result.isConfirmed) {
+        window.location = '/delete/'+id;
+        } 
+      })
+    }
+  </script>
+
+</body>
+
 </html>
